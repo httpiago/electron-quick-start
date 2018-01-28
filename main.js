@@ -13,7 +13,31 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  // Lern more: https://electronjs.org/docs/api/browser-window
+  mainWindow = new BrowserWindow({
+    backgroundColor: '#FFF',
+    width: 800,
+    height: 600,
+    center: true,
+    resizable: true,
+  });
+  
+  // Change menu bar ('null' for hide)
+  var window_menu_template = [
+    {
+      label: 'MENU',
+      submenu: [
+        { label: 'Olá', id: 'first-item' },
+        { label: 'Checkbox', type: 'checkbox', checked: true, id: 'toggle-item' },
+		    { type: 'separator' },
+        { label: 'desativado', enabled: false },
+        { label: 'Abrir site do Google', accelerator: 'Control+A', click: () => { require('electron').shell.openExternal('https://google.com') } },
+        { label: 'Fechar', role: 'close' }
+      ]
+    }
+  ];
+  const menu = Menu.buildFromTemplate(template) || null;
+  Menu.setApplicationMenu(menu)
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
